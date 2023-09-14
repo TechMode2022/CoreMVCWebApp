@@ -61,6 +61,7 @@ namespace CoreMVCWebApp.Controllers
             return jresult;
         }
 
+        // For downloading the file
         public FileResult MyFile()
         {
             byte[] filesBytes = System.IO.File.ReadAllBytes("logexceptions.txt");
