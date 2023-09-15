@@ -110,6 +110,20 @@ namespace CoreMVCWebApp.Controllers
 
             if (personToDelete != null)
             {
+                return View(personToDelete);
+            }
+
+            return RedirectToAction("GetPersons");
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Person Per)
+        {
+            // Find the person to delete by Id.
+            Person personToDelete = personList.FirstOrDefault(x => x.Id == Per.Id);
+
+            if (personToDelete != null)
+            {
                 // Remove the person from the list.
                 personList.Remove(personToDelete);
                 SavePersonsList(personList);
