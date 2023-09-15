@@ -58,7 +58,7 @@ namespace CoreMVCWebApp.Controllers
                 new Person{ Id = 2,FirstName="James",LastName="Raj"}
             };
             var jresult = Json(persons);
-            return jresult;
+            return new JsonResult(jresult);
         }
 
         // For downloading the file
