@@ -1,4 +1,5 @@
-﻿using CoreMVCWebApp.Models;
+﻿using CoreMVCWebApp.Filters;
+using CoreMVCWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -12,7 +13,7 @@ namespace CoreMVCWebApp.Controllers
         {
             _logger = logger;
         }
-
+        [Log]
         public IActionResult Index()
         {
             return View();
@@ -28,6 +29,8 @@ namespace CoreMVCWebApp.Controllers
 
         public IActionResult Privacy()
         {
+            string msg = null;
+            ViewBag.Message = msg.Length;
             return View();
         }
 
@@ -35,6 +38,11 @@ namespace CoreMVCWebApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public ActionResult CustomError()
+        {
+            return View();
         }
 
         public ActionResult Details(int? id)

@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CoreMVCWebApp.Models.Grade>
+
+@{
+    ViewData["Title"] = "Getgrades";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Grade/_GradeLayout.cshtml";
+}
+
+<h1>Getgrades</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.GradeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GradeName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GradeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GradeName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.GradeId }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.GradeId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.GradeId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@section LeftSection {
+    <p> This is a Section</p>
+}

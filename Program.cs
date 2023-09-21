@@ -1,7 +1,13 @@
+using CoreMVCWebApp.Filters;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddControllersWithViews(config => config.Filters.Add(typeof(CustomExceptionFIlter)));
+ 
 
 var app = builder.Build();
 
@@ -16,12 +22,19 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseSwagger();
+
+app.UseSwaggerUI(c =>
+{
+
+});
+
 app.UseRouting();
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Person}/{action=GetPersons}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
