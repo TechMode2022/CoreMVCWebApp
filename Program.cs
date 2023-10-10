@@ -1,4 +1,7 @@
 using CoreMVCWebApp.Filters;
+using CoreMVCWebApp.Service;
+using Serilog;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +10,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllersWithViews(config => config.Filters.Add(typeof(CustomExceptionFIlter)));
- 
+
+builder.Services.AddTransient<IHelloWorldService,HelloWorldService>();
+builder.Services.AddTransient<ICalculatorService,CalculatorService>();
+
+builder.Logging.ClearProviders();
+//builder.Logging.AddConsole();
+builder.Host.UseSerilog((context, Configuration) => Configuration.ReadFrom.Configuration(context.Configuration));
+//builder.Services.AddSingleton<ICocnfiguration>(Configuration);
+
 
 var app = builder.Build();
 
@@ -32,7 +43,7 @@ app.UseSwaggerUI(c =>
 app.UseRouting();
 
 app.UseAuthorization();
-
+app.UseSerilogRequestLogging();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

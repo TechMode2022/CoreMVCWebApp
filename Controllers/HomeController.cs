@@ -1,5 +1,6 @@
 ﻿using CoreMVCWebApp.Filters;
 using CoreMVCWebApp.Models;
+using CoreMVCWebApp.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -9,13 +10,30 @@ namespace CoreMVCWebApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        IHelloWorldService _helloWorldService;
+        private IWebHostEnvironment Environment;
+
+        public HomeController(ILogger<HomeController> logger,IWebHostEnvironment webHostEnvironment, IHelloWorldService helloWorldService)
         {
             _logger = logger;
+            _helloWorldService = helloWorldService;
+            Environment= webHostEnvironment;// constructor Injection
         }
         [Log]
+       
         public IActionResult Index()
         {
+            string hello = _helloWorldService.SaysHello();
+            ViewBag.Hello = hello;
+            _logger.LogError("Log Message in the Index() method");
+            _logger.LogInformation("Log Message in the Index() method");
+            _logger.LogCritical("Logging Critical Information");
+            _logger.LogDebug("Logging Debug Information");
+            _logger.LogError("Logging Error Information");
+            _logger.LogTrace("Logging trace ");
+            _logger.LogWarning("Logging warning ");
+
+
             return View();
             //return Redirect("home/about");
             //return Redirect("http://www.msn.com");
